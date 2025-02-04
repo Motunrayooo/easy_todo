@@ -1,0 +1,4 @@
+enum TodoCategory {
+  personal,
+  business,
+}
