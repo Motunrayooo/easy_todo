@@ -1,4 +1,3 @@
-import 'package:easy_todo/core/storage/todo_storage.dart';
 import 'package:easy_todo/core/utils/extensions.dart';
 import 'package:easy_todo/core/utils/ui_helper.dart';
 import 'package:easy_todo/features/home/data/model/todo_model.dart';
@@ -7,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/utils/app_colors.dart';
-import '../../../../core/utils/themes/app_theme.dart';
+
 import '../../logic/todo_notifier.dart';
 import '../widgets/todo_tile.dart';
 import 'create_todo_screen.dart';
@@ -53,7 +52,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
         onTap: () {
           context.push(
             MaterialPageRoute(builder: (context) {
-              return CreateTodoScreen();
+              return const CreateTodoScreen();
             }),
           );
         },
@@ -232,44 +231,55 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                     ListView.builder(
                       itemCount: todos.length,
                       itemBuilder: (BuildContext context, int index) {
-                        final todo = todos[index];
-                        return TodoTile(
-                          todoTitle: capitalizeFirstLetter(todo.title ?? ''),
-                          // checkboxValue: checkBoxValue,
-                          todo: todo,
-                        ).padVertical(8);
+                        final allTodos = todos[index];
+                        return Column(
+                          children: [
+                            TodoTile(
+                              todoTitle:
+                                  capitalizeFirstLetter(allTodos.title ?? ''),
+                              todo: allTodos,
+                            ).padVertical(8),
+                            10.hi,
+                            if (index == todos.length - 1) 60.hi,
+                          ],
+                        );
                       },
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.4,
-                      child: ListView.builder(
-                        itemCount: personalTodos.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final personalTodo = personalTodos[index];
-                          return TodoTile(
-                            todoTitle:
-                                capitalizeFirstLetter(personalTodo.title ?? ''),
-                            todo: personalTodo,
-                            // checkboxValue: checkBoxValue,
-                          ).padVertical(8);
-                        },
-                      ),
+                    ListView.builder(
+                      itemCount: personalTodos.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final personalTodo = personalTodos[index];
+                        return Column(
+                          children: [
+                            TodoTile(
+                              todoTitle: capitalizeFirstLetter(
+                                  personalTodo.title ?? ''),
+                              todo: personalTodo,
+                            ).padVertical(8),
+                            10.hi,
+                            if (index == personalTodos.length - 1) 60.hi,
+                          ],
+                        );
+                      },
                     ),
-                    SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.4,
-                        child: ListView.builder(
-                          itemCount: businessTodos.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            final businessTodo = businessTodos[index];
-                            return TodoTile(
+                    ListView.builder(
+                      itemCount: businessTodos.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final businessTodo = businessTodos[index];
+                        return Column(
+                          children: [
+                            TodoTile(
                               todoTitle: capitalizeFirstLetter(
                                 businessTodo.title ?? '',
                               ),
                               todo: businessTodo,
-                              // checkboxValue: checkBoxValue,
-                            ).padVertical(8);
-                          },
-                        )),
+                            ).padVertical(8),
+                            10.hi,
+                            if (index == businessTodos.length - 1) 60.hi,
+                          ],
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),
