@@ -27,8 +27,9 @@ class TodoStateNotifier extends StateNotifier<List<TodoModel>> {
     await ToDoStorage.saveTodos(state);
   }
 
-  void removeTodo(String id) {
+ Future<void>  removeTodo(String id) async{
     state = state.where((todo) => todo.id != id).toList();
+    await ToDoStorage.saveTodos(state);
   }
 
   void toggleTodoStatus(TodoModel todo) {

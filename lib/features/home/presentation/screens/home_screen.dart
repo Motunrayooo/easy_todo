@@ -234,11 +234,33 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                         final allTodos = todos[index];
                         return Column(
                           children: [
-                            TodoTile(
-                              todoTitle:
-                                  capitalizeFirstLetter(allTodos.title ?? ''),
-                              todo: allTodos,
-                            ).padVertical(8),
+                            Dismissible(
+                              key: Key(allTodos.id ?? ''),
+                              direction: DismissDirection.endToStart,
+                              background: Container(
+                                decoration: const BoxDecoration(
+                                  color: AppColors.red,
+                                ),
+                                alignment: Alignment.centerRight,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                ),
+                                child: const Icon(
+                                  Icons.delete,
+                                  color: AppColors.white,
+                                ),
+                              ),
+                              onDismissed: (direction) {
+                                ref
+                                    .read(todoStateProvider.notifier)
+                                    .removeTodo(allTodos.id ?? '');
+                              },
+                              child: TodoTile(
+                                todoTitle:
+                                    capitalizeFirstLetter(allTodos.title ?? ''),
+                                todo: allTodos,
+                              ).padVertical(8),
+                            ),
                             10.hi,
                             if (index == todos.length - 1) 60.hi,
                           ],
