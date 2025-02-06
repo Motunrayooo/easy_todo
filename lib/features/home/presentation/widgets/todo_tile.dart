@@ -9,16 +9,18 @@ import '../../logic/todo_notifier.dart';
 
 class TodoTile extends ConsumerStatefulWidget {
   TodoTile({
-    super.key,
+    // super.key,
     required this.todoTitle,
-    // this.checkboxValue = false,
-    required this.todo
-
+    required this.todo,
+    required this.key,
+    required this.onDismissed,
   });
 
   final String todoTitle;
-  // bool checkboxValue;
+
   final TodoModel todo;
+  final Key key;
+  final void Function(DismissDirection)? onDismissed;
 
   @override
   ConsumerState<TodoTile> createState() => _TodoTileState();
@@ -27,51 +29,62 @@ class TodoTile extends ConsumerStatefulWidget {
 class _TodoTileState extends ConsumerState<TodoTile> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(
-        vertical: 5.h,
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.primaryShade900,
-        borderRadius: BorderRadius.all(
-          Radius.circular(8.r),
+    return Dismissible(
+      key: widget.key,
+      direction: DismissDirection.endToStart,
+      background: Container(
+        decoration: const BoxDecoration(
+          color: AppColors.red,
+        ),
+        alignment: Alignment.centerRight,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 10,
+        ),
+        child: const Icon(
+          Icons.delete,
+          color: AppColors.white,
         ),
       ),
-      child: Row(
-        children: [
-
-          Checkbox(
-            // value: widget.checkboxValue,
-            value: widget.todo.isCompleted,
-            // onChanged: (bool? newValue) {
-            //   setState(() {
-            //     widget.checkboxValue = newValue!;
-            //   });
-            // },
-            onChanged: (bool? newValue){
-               ref.read(todoStateProvider.notifier).toggleTodoStatus(widget.todo);
-            },
-
-            activeColor: AppColors.secondaryColor,
-            side: BorderSide(
-              color: AppColors.secondaryColor,
-              width: 1.5,
-            ),
-
+      onDismissed: widget.onDismissed,
+      child: Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(
+          vertical: 5.h,
+        ),
+        decoration: BoxDecoration(
+          color: AppColors.primaryShade900,
+          borderRadius: BorderRadius.all(
+            Radius.circular(8.r),
           ),
-          Text(
-            widget.todoTitle,
-            style: context.textTheme.bodyMedium?.copyWith(
-              color: AppColors.white,
-              fontSize: 18.sp,
-              decoration: widget.todo.isCompleted ? TextDecoration.lineThrough : TextDecoration.none,
-              decorationColor: AppColors.white,
-              decorationThickness: 2.0
+        ),
+        child: Row(
+          children: [
+            Checkbox(
+              value: widget.todo.isCompleted,
+              onChanged: (bool? newValue) {
+                ref
+                    .read(todoStateProvider.notifier)
+                    .toggleTodoStatus(widget.todo);
+              },
+              activeColor: AppColors.secondaryColor,
+              side: const BorderSide(
+                color: AppColors.secondaryColor,
+                width: 1.5,
+              ),
             ),
-
-          ),
-        ],
+            Text(
+              widget.todoTitle,
+              style: context.textTheme.bodyMedium?.copyWith(
+                  color: AppColors.white,
+                  fontSize: 18.sp,
+                  decoration: widget.todo.isCompleted
+                      ? TextDecoration.lineThrough
+                      : TextDecoration.none,
+                  decorationColor: AppColors.white,
+                  decorationThickness: 2.0),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -234,33 +234,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                         final allTodos = todos[index];
                         return Column(
                           children: [
-                            Dismissible(
+                            TodoTile(
+                              todoTitle:
+                                  capitalizeFirstLetter(allTodos.title ?? ''),
+                              todo: allTodos,
                               key: Key(allTodos.id ?? ''),
-                              direction: DismissDirection.endToStart,
-                              background: Container(
-                                decoration: const BoxDecoration(
-                                  color: AppColors.red,
-                                ),
-                                alignment: Alignment.centerRight,
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                ),
-                                child: const Icon(
-                                  Icons.delete,
-                                  color: AppColors.white,
-                                ),
-                              ),
                               onDismissed: (direction) {
                                 ref
                                     .read(todoStateProvider.notifier)
                                     .removeTodo(allTodos.id ?? '');
                               },
-                              child: TodoTile(
-                                todoTitle:
-                                    capitalizeFirstLetter(allTodos.title ?? ''),
-                                todo: allTodos,
-                              ).padVertical(8),
-                            ),
+                            ).padVertical(8),
                             10.hi,
                             if (index == todos.length - 1) 60.hi,
                           ],
@@ -277,6 +261,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                               todoTitle: capitalizeFirstLetter(
                                   personalTodo.title ?? ''),
                               todo: personalTodo,
+                              key: Key(personalTodo.id ?? ''),
+                              onDismissed: (direction) {
+                                ref
+                                    .read(todoStateProvider.notifier)
+                                    .removeTodo(personalTodo.id ?? '');
+                              },
                             ).padVertical(8),
                             10.hi,
                             if (index == personalTodos.length - 1) 60.hi,
@@ -295,6 +285,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                                 businessTodo.title ?? '',
                               ),
                               todo: businessTodo,
+                              key: Key(businessTodo.id ?? ''),
+                              onDismissed: (direction) {
+                                ref
+                                    .read(todoStateProvider.notifier)
+                                    .removeTodo(businessTodo.id ?? '');
+                              },
                             ).padVertical(8),
                             10.hi,
                             if (index == businessTodos.length - 1) 60.hi,
