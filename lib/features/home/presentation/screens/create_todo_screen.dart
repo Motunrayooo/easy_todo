@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:easy_todo/core/common_widgets/app_elevated_button.dart';
 import 'package:easy_todo/core/common_widgets/app_radio_tile.dart';
 import 'package:easy_todo/core/common_widgets/app_text_field.dart';
 import 'package:easy_todo/core/enums.dart';
@@ -111,7 +112,8 @@ class _CreateTodoScreenState extends ConsumerState<CreateTodoScreen> {
               maxLines: 5,
             ),
             120.hi,
-            GestureDetector(
+            AppElevatedButton(
+              label: 'Done',
               onTap: () {
                 final TodoModel todo = TodoModel(
                     id: todoId(),
@@ -122,26 +124,6 @@ class _CreateTodoScreenState extends ConsumerState<CreateTodoScreen> {
 
                 context.pop();
               },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: AppColors.primaryShade900,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10.r),
-                  ),
-                ),
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(
-                  vertical: 10.w,
-                ),
-                child: Center(
-                  child: Text(
-                    'Done',
-                    style: context.textTheme.bodyMedium?.copyWith(
-                      color: AppColors.white,
-                    ),
-                  ),
-                ),
-              ),
             ),
           ],
         ),

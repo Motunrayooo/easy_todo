@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "344947341026",
+    "project_id": "easy-todo-25253",
+    "storage_bucket": "easy-todo-25253.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:344947341026:android:e51638370391397aae10bb",
+        "android_client_info": {
+          "package_name": "com.example.easy_todo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq2gu_p9xI5RMUskeRkjJqsqWKuRlQLRQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

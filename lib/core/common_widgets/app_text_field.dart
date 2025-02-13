@@ -42,7 +42,7 @@ class AppTextField extends StatelessWidget {
               contentPadding: EdgeInsets.symmetric(vertical: 10.h,horizontal: 6.w,),
               hintText: hintText,
               hintStyle: context.textTheme.bodySmall
-                  ?.copyWith(color: AppColors.white.withOpacity(0.6)),
+                  ?.copyWith(color: AppColors.black.withOpacity(0.6)),
               isDense: true,
 
               prefixIcon: prefixIcon,

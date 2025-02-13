@@ -1,4 +1,5 @@
 import 'package:easy_todo/core/utils/extensions.dart';
+import 'package:easy_todo/features/auth/presentation/screens/login_screen.dart';
 import 'package:easy_todo/features/home/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,9 +17,9 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 4), () {
+    Future.delayed(const Duration(seconds: 2), () {
       Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return const HomeScreen();
+        return const LoginScreen();
       }));
     });
     super.initState();
@@ -29,11 +30,9 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          // color: AppColors.primaryColor,
           gradient: LinearGradient(
             colors: [
               AppColors.primaryColor.withOpacity(0.9),
-              // Color(0xFF4903fc),
               AppColors.primaryShade900,
             ],
             begin: Alignment.topLeft,
