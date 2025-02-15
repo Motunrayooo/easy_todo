@@ -67,7 +67,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   hintText: 'Enter email or phone number',
                   label: 'Email',
                   controller: emailCtrl,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  autoValidateMode: AutovalidateMode.onUserInteraction,
                   validator: (email) =>
                       email != null && !EmailValidator.validate(email)
                           ? 'Enter a valid email'
@@ -78,7 +78,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   hintText: 'Enter password',
                   label: 'Password',
                   controller: passwordCtrl,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  autoValidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) => value != null && value.length < 6
                       ? 'Enter a min. of 6 characters'
                       : null,

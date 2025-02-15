@@ -19,7 +19,9 @@ Future main() async {
   );
   runApp(const EasyTodo());
 }
+
 final navigatorKey = GlobalKey<NavigatorState>();
+
 class EasyTodo extends StatelessWidget {
   const EasyTodo({super.key});
 
@@ -33,7 +35,6 @@ class EasyTodo extends StatelessWidget {
           builder: (context, child) {
             return MaterialApp(
               navigatorKey: navigatorKey,
-              scaffoldMessengerKey: messengerKey,
               debugShowCheckedModeBanner: false,
               theme: AppTheme.lightTheme,
               darkTheme: AppTheme.darkTheme,

@@ -14,16 +14,19 @@ class AppTextField extends StatelessWidget {
     this.prefixIcon,
     this.maxLines = 1,
     this.validator,
-    this.autovalidateMode,
+    this.autoValidateMode,
+    this.obscureText = false,
+    this.suffixIcon,
   });
 
   final String hintText, label;
   TextEditingController? controller;
   final void Function(String)? onChanged;
-  final Widget? prefixIcon;
+  final Widget? prefixIcon, suffixIcon;
   int? maxLines;
   String? Function(String?)? validator;
-  AutovalidateMode? autovalidateMode;
+  AutovalidateMode? autoValidateMode;
+  bool obscureText;
 
   @override
   Widget build(BuildContext context) {
@@ -41,58 +44,59 @@ class AppTextField extends StatelessWidget {
           controller: controller,
           onChanged: onChanged,
           validator: validator,
-          autovalidateMode: autovalidateMode,
+          autovalidateMode: autoValidateMode,
           style: context.textTheme.bodySmall?.copyWith(color: AppColors.black),
           maxLines: maxLines,
+          obscuringCharacter: '*',
+          obscureText: obscureText,
           cursorColor: AppColors.primaryShade900,
           decoration: InputDecoration(
-
-            contentPadding: EdgeInsets.symmetric(
-              vertical: 10.h,
-              horizontal: 6.w,
-            ),
-            hintText: hintText,
-            hintStyle: context.textTheme.bodySmall
-                ?.copyWith(color: AppColors.black.withOpacity(0.6)),
-            isDense: true,
-            prefixIcon: prefixIcon,
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppColors.primaryShade900,
-                width: 1.1.w,
+              contentPadding: EdgeInsets.symmetric(
+                vertical: 10.h,
+                horizontal: 6.w,
               ),
-              borderRadius: BorderRadius.all(
-                Radius.circular(10.r),
+              hintText: hintText,
+              hintStyle: context.textTheme.bodySmall
+                  ?.copyWith(color: AppColors.black.withOpacity(0.6)),
+              suffixIcon: suffixIcon,
+              isDense: true,
+              prefixIcon: prefixIcon,
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: AppColors.primaryShade900,
+                  width: 1.1.w,
+                ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10.r),
+                ),
               ),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppColors.primaryShade900,
-                width: 1.1.w,
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: AppColors.primaryShade900,
+                  width: 1.1.w,
+                ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10.r),
+                ),
               ),
-              borderRadius: BorderRadius.all(
-                Radius.circular(10.r),
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: AppColors.red,
+                  width: 1.1.w,
+                ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10.r),
+                ),
               ),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppColors.red,
-                width: 1.1.w,
-              ),
-              borderRadius: BorderRadius.all(
-                Radius.circular(10.r),
-              ),
-            ),
-            focusedErrorBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppColors.primaryShade900,
-                width: 1.1.w,
-              ),
-              borderRadius: BorderRadius.all(
-                Radius.circular(10.r),
-              ),
-            )
-          ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: AppColors.primaryShade900,
+                  width: 1.1.w,
+                ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10.r),
+                ),
+              )),
         ),
       ],
     );

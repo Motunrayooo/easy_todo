@@ -3,26 +3,30 @@ import 'dart:developer';
 import 'package:easy_todo/core/common_widgets/app_elevated_button.dart';
 import 'package:easy_todo/core/common_widgets/app_text_field.dart';
 import 'package:easy_todo/core/utils/extensions.dart';
+import 'package:easy_todo/features/auth/logic/auth_state_notifier.dart';
 import 'package:easy_todo/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:easy_todo/features/home/presentation/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/utils/app_colors.dart';
+import '../../../../core/utils/show_snackbar.dart';
 import '../../../../core/utils/themes/app_theme.dart';
 import '../../../../main.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   final TextEditingController emailCtrl = TextEditingController();
   final TextEditingController passwordCtrl = TextEditingController();
+  bool isObscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -55,11 +59,41 @@ class _LoginScreenState extends State<LoginScreen> {
                 hintText: 'Enter password',
                 label: 'Password',
                 controller: passwordCtrl,
+                obscureText: isObscure,
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      isObscure = !isObscure;
+                    });
+                  },
+                  child: Icon(
+                    isObscure ? Icons.visibility : Icons.visibility_off,
+                  ),
+                ),
               ),
               130.hi,
               AppElevatedButton(
                 label: 'Login',
-                onTap: login,
+                isLoading: ref.watch(isLoadingStateProvider),
+                onTap: () async {
+                  ref.read(isLoadingStateProvider.notifier).state = true;
+                  try {
+                    await FirebaseAuth.instance.signInWithEmailAndPassword(
+                      email: emailCtrl.text,
+                      password: passwordCtrl.text,
+                    );
+                    ref.read(isLoadingStateProvider.notifier).state = false;
+                    context.push(
+                      MaterialPageRoute(builder: (context) {
+                        return const HomeScreen();
+                      }),
+                    );
+                  } on FirebaseAuthException catch (e) {
+                    log('Login exception: $e');
+                    showSnackBar(context, e.toString());
+                    ref.read(isLoadingStateProvider.notifier).state = false;
+                  }
+                },
               ),
               10.hi,
               Center(
@@ -67,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onTap: () {
                     context.push(
                       MaterialPageRoute(builder: (context) {
-                        return SignUpScreen();
+                        return const SignUpScreen();
                       }),
                     );
                   },
@@ -114,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     } on FirebaseAuthException catch (e) {
       log('Login exception: $e');
-
+      showSnackBar(context, e.toString());
     }
     navigatorKey.currentState
         ?.pushReplacement(MaterialPageRoute(builder: (context) {
