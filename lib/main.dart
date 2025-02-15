@@ -1,3 +1,4 @@
+import 'package:easy_todo/core/utils/show_snackbar.dart';
 import 'package:easy_todo/core/utils/themes/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,7 @@ class EasyTodo extends StatelessWidget {
           builder: (context, child) {
             return MaterialApp(
               navigatorKey: navigatorKey,
+              scaffoldMessengerKey: messengerKey,
               debugShowCheckedModeBanner: false,
               theme: AppTheme.lightTheme,
               darkTheme: AppTheme.darkTheme,

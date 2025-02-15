@@ -114,6 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     } on FirebaseAuthException catch (e) {
       log('Login exception: $e');
+
     }
     navigatorKey.currentState
         ?.pushReplacement(MaterialPageRoute(builder: (context) {
