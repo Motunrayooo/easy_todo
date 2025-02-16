@@ -131,28 +131,5 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     );
   }
 
-  Future login() async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailCtrl.text,
-        password: passwordCtrl.text,
-      );
-    } on FirebaseAuthException catch (e) {
-      log('Login exception: $e');
-      showSnackBar(context, e.toString());
-    }
-    navigatorKey.currentState
-        ?.pushReplacement(MaterialPageRoute(builder: (context) {
-      return const HomeScreen();
-    }));
-  }
+
 }

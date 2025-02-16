@@ -5,6 +5,7 @@ import 'package:easy_todo/features/auth/presentation/screens/login_screen.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/common_widgets/app_elevated_button.dart';
@@ -13,18 +14,20 @@ import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/show_snackbar.dart';
 import '../../../../core/utils/themes/app_theme.dart';
 import '../../../../main.dart';
+import '../../logic/auth_state_notifier.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  ConsumerState<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   final formKey = GlobalKey<FormState>();
   final TextEditingController emailCtrl = TextEditingController();
   final TextEditingController passwordCtrl = TextEditingController();
+  bool isObscure = true;
 
   @override
   void dispose() {
@@ -78,6 +81,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   hintText: 'Enter password',
                   label: 'Password',
                   controller: passwordCtrl,
+                  obscureText: isObscure,
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isObscure = !isObscure;
+                      });
+                    },
+                    child: Icon(
+                      isObscure ? Icons.visibility : Icons.visibility_off,
+                    ),
+                  ),
                   autoValidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) => value != null && value.length < 6
                       ? 'Enter a min. of 6 characters'
@@ -86,7 +100,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 130.hi,
                 AppElevatedButton(
                   label: 'Sign up',
-                  onTap: createAccount,
+                  isLoading: ref.watch(isLoadingStateProvider),
+                  onTap: () async {
+                    final isValid = formKey.currentState!.validate();
+                    if (!isValid) return;
+                    ref.read(isLoadingStateProvider.notifier).state = true;
+                    try {
+                      await FirebaseAuth.instance
+                          .createUserWithEmailAndPassword(
+                        email: emailCtrl.text,
+                        password: passwordCtrl.text,
+                      );
+                      showSnackBar(
+                        context,
+                        'Account created successfully!',
+                        AppColors.green,
+                      );
+                      ref.read(isLoadingStateProvider.notifier).state = false;
+                      context.pop();
+                    } catch (e) {
+                      log('sign up exception: $e');
+                      ref.read(isLoadingStateProvider.notifier).state = false;
+                      showSnackBar(context, e.toString());
+                    }
+                  },
                 ),
                 10.hi,
                 Center(
@@ -123,33 +160,5 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
-  }
-
-  Future createAccount() async {
-    final isValid = formKey.currentState!.validate();
-    if (!isValid) return;
-
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
-    try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailCtrl.text,
-        password: passwordCtrl.text,
-      );
-    } on FirebaseAuthException catch (e) {
-      log('sign up exception: $e');
-      showSnackBar(context, e.toString());
-    }
-    navigatorKey.currentState
-        ?.pushReplacement(MaterialPageRoute(builder: (context) {
-      return const LoginScreen();
-    }));
   }
 }

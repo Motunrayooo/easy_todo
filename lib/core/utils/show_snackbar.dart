@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'app_colors.dart';
 
-void showSnackBar(BuildContext context, String content) {
+void showSnackBar(BuildContext context, String content,[Color? bgColor]) {
   ScaffoldMessenger.of(context)
     ..hideCurrentSnackBar()
     ..showSnackBar(
@@ -20,7 +20,7 @@ void showSnackBar(BuildContext context, String content) {
             color: AppColors.white
           ),
         ),
-        backgroundColor: AppColors.red,
+        backgroundColor: bgColor ?? AppColors.red,
       ),
     );
 }
