@@ -1,6 +1,7 @@
 import 'package:easy_todo/core/utils/extensions.dart';
 import 'package:easy_todo/core/utils/ui_helper.dart';
 import 'package:easy_todo/features/home/data/model/todo_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -77,6 +78,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               50.hi,
+              Align(
+                alignment: Alignment.topRight,
+                child: GestureDetector(
+                  onTap: () async{
+                    await FirebaseAuth.instance.signOut();
+                  },
+                  child: Text(
+                    'Log out',
+                    style: context.textTheme.bodySmall?.copyWith(
+                      color: AppColors.white,
+                      fontSize: 18.sp,
+                      decoration: TextDecoration.underline,
+                      decorationThickness: 2,
+                      decorationColor: AppColors.white
+                    ),
+                  ),
+                ),
+              ),
+              20.hi,
               Text(
                 'What\'s up, Mo\'!',
                 style: context.textTheme.bodyLarge

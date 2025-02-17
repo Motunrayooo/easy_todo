@@ -12,11 +12,13 @@ class AppElevatedButton extends StatelessWidget {
     required this.label,
     this.isLoading = false,
     this.isRow = false,
+    this.isFilled = true,
   });
 
   final void Function() onTap;
   final String label;
-  bool isLoading, isRow;
+  bool isLoading, isRow,isFilled;
+
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +26,13 @@ class AppElevatedButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: AppColors.primaryShade900,
+          color: isFilled ? AppColors.primaryShade900 : AppColors.white,
           borderRadius: BorderRadius.all(
             Radius.circular(10.r),
+          ),
+          border: Border.all(
+            color: AppColors.primaryShade900,
+            width: 1.5,
           ),
         ),
         width: double.infinity,
@@ -54,7 +60,7 @@ class AppElevatedButton extends StatelessWidget {
               Text(
                 label,
                 style: context.textTheme.bodyMedium?.copyWith(
-                  color: AppColors.white,
+                  color: isFilled?  AppColors.white : AppColors.primaryShade900,
                 ),
               ),
             ],

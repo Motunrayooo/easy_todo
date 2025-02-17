@@ -4,6 +4,7 @@ import 'package:easy_todo/features/home/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/common_widgets/app.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/themes/app_theme.dart';
 
@@ -19,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return const LoginScreen();
+        return const App();
       }));
     });
     super.initState();

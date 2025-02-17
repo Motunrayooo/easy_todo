@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:easy_todo/core/utils/extensions.dart';
 import 'package:easy_todo/features/auth/presentation/screens/login_screen.dart';
+import 'package:easy_todo/features/auth/presentation/screens/verify_email_screen.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -117,7 +118,11 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                         AppColors.green,
                       );
                       ref.read(isLoadingStateProvider.notifier).state = false;
-                      context.pop();
+                      context.push(
+                        MaterialPageRoute(builder: (context) {
+                          return const VerifyEmailScreen();
+                        }),
+                      );
                     }on FirebaseAuthException catch (e) {
                       log('sign up exception: $e');
                       ref.read(isLoadingStateProvider.notifier).state = false;
