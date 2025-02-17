@@ -11,11 +11,12 @@ class AppElevatedButton extends StatelessWidget {
     required this.onTap,
     required this.label,
     this.isLoading = false,
+    this.isRow = false,
   });
 
   final void Function() onTap;
   final String label;
-  bool isLoading;
+  bool isLoading, isRow;
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +38,19 @@ class AppElevatedButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               isLoading
-                  ?  SpinKitChasingDots(
+                  ? SpinKitChasingDots(
                       color: AppColors.white,
-                size: 20.h,
+                      size: 20.h,
                     )
                   : const SizedBox(),
               isLoading ? 6.wi : 0.wi,
+              isRow
+                  ? Icon(
+                      Icons.email_outlined,
+                      color: AppColors.white,
+                    )
+                  : SizedBox(),
+              isRow ? 6.wi : 0.wi,
               Text(
                 label,
                 style: context.textTheme.bodyMedium?.copyWith(

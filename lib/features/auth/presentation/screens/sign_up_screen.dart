@@ -118,7 +118,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       );
                       ref.read(isLoadingStateProvider.notifier).state = false;
                       context.pop();
-                    } catch (e) {
+                    }on FirebaseAuthException catch (e) {
                       log('sign up exception: $e');
                       ref.read(isLoadingStateProvider.notifier).state = false;
                       showSnackBar(context, e.toString());

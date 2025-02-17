@@ -4,6 +4,7 @@ import 'package:easy_todo/core/common_widgets/app_elevated_button.dart';
 import 'package:easy_todo/core/common_widgets/app_text_field.dart';
 import 'package:easy_todo/core/utils/extensions.dart';
 import 'package:easy_todo/features/auth/logic/auth_state_notifier.dart';
+import 'package:easy_todo/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:easy_todo/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:easy_todo/features/home/presentation/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -95,7 +96,29 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   }
                 },
               ),
-              10.hi,
+              16.hi,
+              Center(
+                child: GestureDetector(
+                  onTap: () {
+                    context.push(
+                      MaterialPageRoute(builder: (context) {
+                        return const ForgotPasswordScreen();
+                      }),
+                    );
+                  },
+                  child: Text(
+                    'Forgot Password?',
+                    style: context.textTheme.bodyMedium?.copyWith(
+                      color: AppColors.secondaryColor,
+                      fontSize: 17.sp,
+                      decoration: TextDecoration.underline,
+                      decorationColor: AppColors.secondaryColor,
+                      decorationThickness: 1.5,
+                    ),
+                  ),
+                ),
+              ),
+              16.hi,
               Center(
                 child: GestureDetector(
                   onTap: () {
@@ -130,6 +153,4 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       ),
     );
   }
-
-
 }
