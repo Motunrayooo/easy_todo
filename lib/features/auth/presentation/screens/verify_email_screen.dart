@@ -96,9 +96,11 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                 onTap: () async {
                   timer?.cancel();
                   await FirebaseAuth.instance.signOut();
-                  context.push(MaterialPageRoute(builder: (context) {
-                    return LoginScreen();
-                  }));
+                  context.push(
+                    MaterialPageRoute(builder: (context) {
+                      return LoginScreen();
+                    }),
+                  );
                 },
                 label: 'Cancel',
                 isFilled: false,
